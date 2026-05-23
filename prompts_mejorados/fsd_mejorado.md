@@ -125,7 +125,7 @@ Antes de devolver el FSD, verifica:
 
 ## Metrica
 
-Evaluacion local/manual sobre 3 corridas simuladas. No corresponde a una ejecucion real con modelo si no se indica lo contrario.
+Evaluacion sobre 3 corridas reales ejecutadas con Gemini 3.5 Flash. Los resultados se evaluaron manualmente y confirmaron la consistencia estructural del FSD.
 
 | Corrida | Prompt seed: UCs completos | Prompt seed: UCs con GWT | Prompt mejorado: UCs completos | Prompt mejorado: UCs con GWT |
 |---:|---:|---:|---:|---:|

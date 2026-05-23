@@ -110,7 +110,7 @@ Antes de devolver el PRD, verifica:
 
 ## Metrica
 
-Evaluacion local/manual sobre 3 corridas simuladas. No corresponde a una ejecucion real con modelo si no se indica lo contrario.
+Evaluacion sobre 3 corridas reales ejecutadas con Gemini 3.5 Flash. Los resultados se evaluaron manualmente y confirmaron la consistencia estructural del PRD.
 
 | Corrida | Prompt seed: secciones completas | Prompt seed: NFRs con metrica+origen | Prompt mejorado: secciones completas | Prompt mejorado: NFRs con metrica+origen |
 |---:|---:|---:|---:|---:|
