@@ -11,6 +11,7 @@ El caso FTGO proviene del libro *Microservices Patterns* de Chris Richardson (Ma
 - [Fuentes y referencias](#fuentes-y-referencias)
 - [Como revisar los artefactos](#como-revisar-los-artefactos)
 - [Como renderizar los diagramas Mermaid](#como-renderizar-los-diagramas-mermaid)
+- [Agent skills para diagramas C4](#agent-skills-para-diagramas-c4)
 - [Como invocar los prompts mejorados](#como-invocar-los-prompts-mejorados)
 - [Metricas de calidad de prompts](#metricas-de-calidad-de-prompts)
 - [Self-check contra rubrica](#self-check-contra-rubrica)
@@ -25,24 +26,35 @@ El caso FTGO proviene del libro *Microservices Patterns* de Chris Richardson (Ma
 | 3 | ADR 1 - Estilo arquitectonico | `docs/adr/0001-architecture-style.md` | 3 opciones evaluadas; decision: migracion incremental con Strangler Fig. |
 | 4 | ADR 2 - IPC y datos | `docs/adr/0002-ipc-and-data-strategy.md` | 3 opciones evaluadas; decision: modelo hibrido REST + eventos con DB-per-service. |
 | 5 | Diagrama C4 nivel 1 | `docs/diagrams/c4_context.mmd` | Diagrama de contexto Mermaid (`C4Context`). |
-| 6 | Diagrama C4 nivel 2 | `docs/diagrams/c4_container.mmd` | Diagrama de contenedores Mermaid (`C4Container`). |
-| 7 | Prompt mejorado PRD | `prompts_mejorados/prd_mejorado.md` | Prompt con 4 TODOs resueltos, Verification, Changelog y Metrica. |
-| 8 | Prompt mejorado FSD | `prompts_mejorados/fsd_mejorado.md` | Prompt con 4 TODOs resueltos, Verification, Changelog y Metrica. |
+| 6 | Diagrama C4 nivel 2 | `docs/diagrams/c4_container.mmd` | Diagrama de contenedores Mermaid (`C4Container`) en version readable/evaluator-friendly. |
+| 6b | Diagrama C4 nivel 2 full | `docs/diagrams/c4_container_full.mmd` | Version completa preservada del diagrama de contenedores. |
+| 7 | Instrucciones para agentes | `AGENTS.md` | Guia repo-local para Codex/agentes con contexto, reglas y validaciones. |
+| 8 | Prompt mejorado PRD | `prompts_mejorados/prd_mejorado.md` | Prompt con 4 TODOs resueltos, Verification, Changelog y Metrica. |
+| 9 | Prompt mejorado FSD | `prompts_mejorados/fsd_mejorado.md` | Prompt con 4 TODOs resueltos, Verification, Changelog y Metrica. |
 
 ## Estructura del proyecto
 
 ```text
 .
+├── AGENTS.md
 ├── README.md
 ├── docs/
 │   ├── PRD.md
 │   ├── FSD.md
+│   ├── agent-skills/
+│   │   ├── INSTALL_SKILLS.md
+│   │   └── SKILLS_SOURCES.md
 │   ├── adr/
 │   │   ├── 0001-architecture-style.md
 │   │   └── 0002-ipc-and-data-strategy.md
-│   └── diagrams/
-│       ├── c4_context.mmd
-│       └── c4_container.mmd
+│   ├── diagrams/
+│   │   ├── README.md
+│   │   ├── c4_context.mmd
+│   │   ├── c4_container.mmd
+│   │   └── c4_container_full.mmd
+│   └── skills/
+│       ├── c4-model/
+│       └── diagramming-architecture/
 └── prompts_mejorados/
     ├── prd_mejorado.md
     └── fsd_mejorado.md
@@ -76,6 +88,7 @@ cat docs/adr/0001-architecture-style.md
 cat docs/adr/0002-ipc-and-data-strategy.md
 cat docs/diagrams/c4_context.mmd
 cat docs/diagrams/c4_container.mmd
+cat docs/diagrams/c4_container_full.mmd
 cat prompts_mejorados/prd_mejorado.md
 cat prompts_mejorados/fsd_mejorado.md
 ```
@@ -95,6 +108,7 @@ find . -maxdepth 3 -type f -not -path './.git/*' | sort
 ```bash
 npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_context.mmd -o docs/diagrams/c4_context.svg
 npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container.mmd -o docs/diagrams/c4_container.svg
+npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_full.mmd -o docs/diagrams/c4_container_full.svg
 ```
 
 **Opcion B - Mermaid Live Editor** (sin instalacion):
@@ -104,6 +118,17 @@ npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container.mmd -o docs/diagram
 3. Verificar que renderice correctamente como `C4Context` o `C4Container`.
 
 **Opcion C - GitHub**: Los archivos `.mmd` se renderizan automaticamente en la vista previa de GitHub si el repositorio es publico.
+
+## Agent skills para diagramas C4
+
+Este repo conserva skills locales para apoyar revisiones C4 y refactors Mermaid
+desde Codex:
+
+- Guia de instalacion: `docs/agent-skills/INSTALL_SKILLS.md`
+- Fuentes, commits y revision de seguridad: `docs/agent-skills/SKILLS_SOURCES.md`
+
+El diagrama `docs/diagrams/c4_container.mmd` es la version readable para la
+rubrica; `docs/diagrams/c4_container_full.mmd` preserva la version completa.
 
 ## Como invocar los prompts mejorados
 
