@@ -12,7 +12,7 @@ System_Ext(sendgrid_twilio, "SendGrid/Twilio", "Email/SMS")
 System_Ext(legacy_monolith, "Legacy Monolith", "Aplicacion Java/WAR existente")
 
 System_Boundary(ftgo, "FTGO Platform") {
-  Container(mobile_app, "Mobile App", "React Native / Web", "App de consumidor para pedidos y tracking")
+  Container(mobile_app, "Mobile App", "React Native / Web", "App de consumidor y courier para pedidos, tracking y entregas")
   Container(restaurant_dashboard, "Restaurant Dashboard", "Web App", "Dashboard de tickets, preparacion y disponibilidad")
   Container(backoffice_web, "Back Office Web", "Web App", "Operaciones, soporte y reportes")
   Container(api_gateway, "API Gateway", "Spring Cloud Gateway", "Entrada HTTP, routing Strangler Fig y auth")
@@ -32,6 +32,7 @@ System_Boundary(ftgo, "FTGO Platform") {
   ContainerDb(kitchen_db, "Kitchen DB", "PostgreSQL", "Tickets y estados de preparacion")
   ContainerDb(delivery_db, "Delivery DB", "PostgreSQL", "Asignaciones y tracking")
   ContainerDb(billing_db, "Billing DB", "PostgreSQL", "Pagos y registros contables")
+  ContainerDb(notification_db, "Notification DB", "PostgreSQL", "Logs de notificaciones y retries")
 }
 
 Rel(consumer, mobile_app, "Usa", "iOS/Android/Web HTTPS")
@@ -57,6 +58,7 @@ Rel(order_service, order_db, "Lee/escribe pedidos", "JDBC/PostgreSQL")
 Rel(kitchen_service, kitchen_db, "Lee/escribe tickets", "JDBC/PostgreSQL")
 Rel(delivery_service, delivery_db, "Lee/escribe asignaciones", "JDBC/PostgreSQL")
 Rel(billing_service, billing_db, "Lee/escribe pagos", "JDBC/PostgreSQL")
+Rel(notification_service, notification_db, "Lee/escribe logs de notificaciones", "JDBC/PostgreSQL")
 
 Rel(order_service, event_broker, "Publica OrderCreated y OrderStatusChanged", "Kafka events")
 Rel(kitchen_service, event_broker, "Consume OrderCreated y publica KitchenTicketAccepted/Rejected", "Kafka events")
