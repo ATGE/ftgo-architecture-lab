@@ -1,0 +1,26 @@
+C4Context
+title FTGO - Diagrama de contexto (nivel 1)
+
+Person(consumer, "Consumidor", "Usuario final que ordena comida y consulta tracking")
+Person(restaurant, "Restaurante", "Negocio asociado que prepara pedidos y gestiona tickets")
+Person(courier, "Courier", "Repartidor independiente que acepta entregas y actualiza estado")
+Person(employee, "Empleado FTGO", "Back office: soporte, finanzas y operaciones")
+
+System(ftgo, "FTGO Platform", "Marketplace de delivery de comida en migracion incremental a microservicios")
+
+System_Ext(stripe, "Stripe", "Pasarela externa de pagos")
+System_Ext(google_maps, "Google Maps", "Mapas, geocoding y rutas")
+System_Ext(sendgrid_twilio, "SendGrid/Twilio", "Email, SMS y notificaciones")
+System_Ext(legacy_monolith, "Legacy Monolith", "Aplicacion Java/WAR existente durante Strangler Fig")
+
+Rel(consumer, ftgo, "Ordena comida, paga y consulta estado", "Mobile/Web HTTPS")
+Rel(restaurant, ftgo, "Gestiona tickets de cocina y disponibilidad", "Restaurant Dashboard HTTPS")
+Rel(courier, ftgo, "Recibe, acepta o rechaza entregas y reporta ubicacion", "Courier App HTTPS/WebSocket")
+Rel(employee, ftgo, "Consulta operaciones, soporte y reportes", "Back Office HTTPS")
+
+Rel(ftgo, stripe, "Autoriza cobros y delega datos PCI", "HTTPS API")
+Rel(ftgo, google_maps, "Consulta rutas, ETA y geocoding", "HTTPS API")
+Rel(ftgo, sendgrid_twilio, "Envia confirmaciones, alertas y recibos", "HTTPS API")
+Rel(ftgo, legacy_monolith, "Convive y redirige capacidades no migradas", "HTTPS/internal adapters")
+
+UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")
