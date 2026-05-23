@@ -1,0 +1,76 @@
+%% Full-detail version preserved from the original container diagram.
+%% The readable/evaluator-friendly version is docs/diagrams/c4_container.mmd.
+
+C4Container
+title FTGO - Diagrama de contenedores (nivel 2)
+
+Person(consumer, "Consumidor", "Ordena comida y consulta tracking")
+Person(restaurant_user, "Restaurante", "Opera tickets de cocina")
+Person(courier, "Courier", "Acepta entregas y actualiza ubicacion")
+Person(employee, "Empleado FTGO", "Back office")
+
+System_Ext(stripe, "Stripe", "Pasarela de pago")
+System_Ext(google_maps, "Google Maps", "Mapas y rutas")
+System_Ext(sendgrid_twilio, "SendGrid/Twilio", "Email/SMS")
+System_Ext(legacy_monolith, "Legacy Monolith", "Aplicacion Java/WAR existente")
+
+System_Boundary(ftgo, "FTGO Platform") {
+  Container(mobile_app, "Mobile App", "React Native / Web", "App de consumidor y courier para pedidos, tracking y entregas")
+  Container(restaurant_dashboard, "Restaurant Dashboard", "Web App", "Dashboard de tickets, preparacion y disponibilidad")
+  Container(backoffice_web, "Back Office Web", "Web App", "Operaciones, soporte y reportes")
+  Container(api_gateway, "API Gateway", "Spring Cloud Gateway", "Entrada HTTP, routing Strangler Fig y auth")
+
+  Container(consumer_service, "Consumer Service", "Java 17 / Spring Boot", "Perfiles, direcciones y preferencias")
+  Container(restaurant_service, "Restaurant Service", "Java 17 / Spring Boot", "Restaurantes, menus, horarios y disponibilidad")
+  Container(order_service, "Order Service", "Java 17 / Spring Boot", "Toma de pedidos, validacion y estado principal")
+  Container(kitchen_service, "Kitchen Service", "Java 17 / Spring Boot", "Tickets de cocina y preparacion")
+  Container(delivery_service, "Delivery Service", "Java 17 / Spring Boot", "Asignacion de couriers, rutas y tracking")
+  Container(billing_service, "Billing Service", "Java 17 / Spring Boot", "Cobros, comisiones y payouts")
+  Container(notification_service, "Notification Service", "Java 17 / Spring Boot", "Email, SMS, push y recibos")
+  ContainerQueue(event_broker, "Event Broker", "Apache Kafka", "Eventos de dominio y procesos asincronos")
+
+  ContainerDb(consumer_db, "Consumer DB", "PostgreSQL", "Datos de consumidores")
+  ContainerDb(restaurant_db, "Restaurant DB", "PostgreSQL", "Restaurantes y menus")
+  ContainerDb(order_db, "Order DB", "PostgreSQL", "Pedidos y aggregate de pedido")
+  ContainerDb(kitchen_db, "Kitchen DB", "PostgreSQL", "Tickets y estados de preparacion")
+  ContainerDb(delivery_db, "Delivery DB", "PostgreSQL", "Asignaciones y tracking")
+  ContainerDb(billing_db, "Billing DB", "PostgreSQL", "Pagos y registros contables")
+  ContainerDb(notification_db, "Notification DB", "PostgreSQL", "Logs de notificaciones y retries")
+}
+
+Rel(consumer, mobile_app, "Usa", "iOS/Android/Web HTTPS")
+Rel(restaurant_user, restaurant_dashboard, "Opera tickets", "Browser HTTPS")
+Rel(employee, backoffice_web, "Gestiona soporte y operaciones", "Browser HTTPS")
+Rel(courier, mobile_app, "Acepta entregas y reporta ubicacion", "Mobile HTTPS/WebSocket")
+
+Rel(mobile_app, api_gateway, "Llama APIs de pedidos, pagos y tracking", "JSON/HTTPS REST")
+Rel(restaurant_dashboard, api_gateway, "Acepta/rechaza tickets", "JSON/HTTPS REST")
+Rel(backoffice_web, api_gateway, "Consulta operaciones y reportes", "JSON/HTTPS REST")
+
+Rel(api_gateway, consumer_service, "Gestiona perfiles y direcciones", "JSON/HTTPS REST")
+Rel(api_gateway, restaurant_service, "Consulta restaurantes, menus y disponibilidad", "JSON/HTTPS REST")
+Rel(api_gateway, order_service, "Crea y consulta pedidos", "JSON/HTTPS REST")
+Rel(api_gateway, kitchen_service, "Gestiona tickets de cocina", "JSON/HTTPS REST")
+Rel(api_gateway, delivery_service, "Consulta tracking y asignaciones", "JSON/HTTPS REST")
+Rel(api_gateway, billing_service, "Consulta estado de pago", "JSON/HTTPS REST")
+Rel(api_gateway, legacy_monolith, "Redirige capacidades no migradas", "JSON/HTTPS REST")
+
+Rel(consumer_service, consumer_db, "Lee/escribe consumidores", "JDBC/PostgreSQL")
+Rel(restaurant_service, restaurant_db, "Lee/escribe restaurantes y menus", "JDBC/PostgreSQL")
+Rel(order_service, order_db, "Lee/escribe pedidos", "JDBC/PostgreSQL")
+Rel(kitchen_service, kitchen_db, "Lee/escribe tickets", "JDBC/PostgreSQL")
+Rel(delivery_service, delivery_db, "Lee/escribe asignaciones", "JDBC/PostgreSQL")
+Rel(billing_service, billing_db, "Lee/escribe pagos", "JDBC/PostgreSQL")
+Rel(notification_service, notification_db, "Lee/escribe logs de notificaciones", "JDBC/PostgreSQL")
+
+Rel(order_service, event_broker, "Publica OrderCreated y OrderStatusChanged", "Kafka events")
+Rel(kitchen_service, event_broker, "Consume OrderCreated y publica KitchenTicketAccepted/Rejected", "Kafka events")
+Rel(delivery_service, event_broker, "Consume KitchenTicketAccepted y publica CourierAssigned/TimedOut", "Kafka events")
+Rel(billing_service, event_broker, "Consume OrderCreated y publica PaymentAuthorized/PaymentPending", "Kafka events")
+Rel(notification_service, event_broker, "Consume cambios de estado para notificar", "Kafka events")
+
+Rel(billing_service, stripe, "Autoriza cobros y delega PCI", "HTTPS API")
+Rel(delivery_service, google_maps, "Consulta rutas, ETA y geocoding", "HTTPS API")
+Rel(notification_service, sendgrid_twilio, "Envia email y SMS", "HTTPS API")
+
+UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")
