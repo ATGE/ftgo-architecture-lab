@@ -45,6 +45,7 @@ Estas capacidades son candidatos de descomposicion, no una obligacion de crear u
 | NFR-08 | Trazabilidad end-to-end | Cada accion de consumidor debe propagar correlation ID y aparecer en distributed tracing. | `Brief §A.4` | La migracion distribuida aumenta la necesidad de diagnostico transversal. |
 | NFR-09 | Migracion incremental | Mantener convivencia con monolito durante 18-24 meses usando Strangler Fig. | `Brief §A.4`, `Brief §A.1` | Reduce riesgo de reemplazo big bang y permite extraer capacidades por prioridad. |
 | NFR-10 | Cumplimiento de pagos y datos | Delegar PCI-DSS a Stripe; proteger datos de consumidor segun GDPR/normas locales. | `Brief §A.4` | El dominio maneja pagos y datos personales, por lo que debe minimizar exposicion directa. |
+| NFR-11 | Stack tecnologico del core | Java 17 / Spring Boot en servicios core; libertad tecnologica en servicios satelite. | `Brief §A.4` | El equipo existente domina Java/Spring; imponer otra tecnologia en el core retrasaria la migracion y aumentaria riesgo. |
 
 ## 5. Alcance
 
