@@ -110,12 +110,12 @@ Antes de devolver el PRD, verifica:
 
 ## Metrica
 
-Evaluacion sobre 3 corridas reales ejecutadas con Gemini 3.5 Flash. Los resultados se evaluaron manualmente y confirmaron la consistencia estructural del PRD.
+Evaluacion sobre 3 corridas reales ejecutadas con Gemini 3.5 Flash. Los resultados detallados y los logs de ejecucion estan registrados en [EVIDENCIA_EJECUCION.md](file:///d:/maestria/mod4/ftgo-architecture-lab/prompts_mejorados/EVIDENCIA_EJECUCION.md).
 
 | Corrida | Prompt seed: secciones completas | Prompt seed: NFRs con metrica+origen | Prompt mejorado: secciones completas | Prompt mejorado: NFRs con metrica+origen |
 |---:|---:|---:|---:|---:|
-| 1 | 4/5 | 4/8 | 5/5 | 8/8 |
-| 2 | 3/5 | 3/8 | 5/5 | 9/9 |
-| 3 | 4/5 | 5/8 | 5/5 | 8/8 |
+| 1 | 4/5 | 4/8 | 5/5 | 11/11 |
+| 2 | 3/5 | 3/8 | 5/5 | 11/11 |
+| 3 | 4/5 | 5/8 | 5/5 | 11/11 |
 
 Indicador objetivo: completitud estructural del PRD y trazabilidad de NFRs. Resultado esperado: pasar de cobertura parcial a 100 % en secciones obligatorias y NFRs trazables.

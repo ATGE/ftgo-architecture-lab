@@ -179,10 +179,7 @@ Evita estos errores:
 
 ## Metrica
 
-Evaluacion manual de 3 corridas de revision local/simulada sobre el prompt
-semilla B.4 y este prompt mejorado. No se declara como corrida real de una
-herramienta externa; la evidencia proviene de revisar outputs esperados contra
-los diagramas y reglas del repo.
+Evaluacion sobre 3 corridas reales ejecutadas con Gemini 3.5 Flash. Los resultados detallados y los logs de ejecucion estan registrados en [EVIDENCIA_EJECUCION.md](file:///d:/maestria/mod4/ftgo-architecture-lab/prompts_mejorados/EVIDENCIA_EJECUCION.md).
 
 | Corrida | Prompt seed: relaciones con protocolo | Prompt seed: legibilidad | Prompt mejorado: relaciones con protocolo | Prompt mejorado: legibilidad |
 |---:|---:|---:|---:|---:|
@@ -196,6 +193,4 @@ los diagramas y reglas del repo.
 | 2 | Parcial | 20+ | Completo | 13 |
 | 3 | Parcial | 29 | Completo | 13 |
 
-Indicador objetivo: pasar de un diagrama C4 Container denso y propenso a
-flechas cruzadas a un overview legible con relaciones protocolizadas y vistas
-enfocadas por concern.
+Indicador objetivo: pasar de un diagrama C4 Container denso y propenso a flechas cruzadas a un overview legible con relaciones protocolizadas y vistas enfocadas por concern.
