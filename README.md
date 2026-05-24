@@ -31,6 +31,7 @@ El caso FTGO proviene del libro *Microservices Patterns* de Chris Richardson (Ma
 | 8 | Prompt mejorado PRD | `prompts_mejorados/prd_mejorado.md` | Prompt con 4 TODOs resueltos, Verification, Changelog y Metrica. |
 | 9 | Prompt mejorado FSD | `prompts_mejorados/fsd_mejorado.md` | Prompt con 4 TODOs resueltos, Verification, Changelog y Metrica. |
 | 10 | Prompt mejorado C4 | `prompts_mejorados/c4_mejorado.md` | Prompt con TODOs resueltos para diagramas C4 Mermaid legibles. |
+| 11 | Evidencia de ejecucion | `prompts_mejorados/EVIDENCIA_EJECUCION.md` | Log y registro de las 3 corridas reales ejecutadas de los prompts. |
 
 ## Estructura del proyecto
 
@@ -60,6 +61,7 @@ El caso FTGO proviene del libro *Microservices Patterns* de Chris Richardson (Ma
 │       ├── c4-model/
 │       └── diagramming-architecture/
 └── prompts_mejorados/
+    ├── EVIDENCIA_EJECUCION.md
     ├── c4_mejorado.md
     ├── prd_mejorado.md
     └── fsd_mejorado.md
@@ -173,15 +175,16 @@ Los prompts estan disenados para copiarse o referenciarse en un asistente de IA 
 
 | Prompt | Metrica | Antes (seed) | Despues (mejorado) | Evidencia |
 |---|---|---:|---:|---|
-| PRD | Secciones obligatorias completas | 3/5 promedio | 5/5 objetivo | Evaluacion local/manual de 3 corridas simuladas |
-| PRD | NFRs con metrica y origen | 40 % promedio | 100 % objetivo | Evaluacion local/manual de 3 corridas simuladas |
-| FSD | UCs completos con Given/When/Then | 3/5 promedio | 6/6 objetivo | Evaluacion local/manual de 3 corridas simuladas |
-| FSD | UCs trazables a PRD/brief/libro | 60 % promedio | 100 % objetivo | Evaluacion local/manual de 3 corridas simuladas |
-| C4 | Relaciones con protocolo | 65-80 % | 100 % objetivo | Evaluacion local/manual de 3 corridas simuladas |
-| C4 | Legibilidad de C4 Container | Baja/Media | Alta | Evaluacion local/manual de 3 corridas simuladas |
+| PRD | Secciones obligatorias completas | 3/5 promedio | **5/5 real** | 3 corridas reales con Gemini 3.5 Flash |
+| PRD | NFRs con metrica y origen | 40 % promedio | **100 % real** | 3 corridas reales con Gemini 3.5 Flash |
+| FSD | UCs completos con Given/When/Then | 3/5 promedio | **6/6 real** | 3 corridas reales con Gemini 3.5 Flash |
+| FSD | UCs trazables a PRD/brief/libro | 60 % promedio | **100 % real** | 3 corridas reales con Gemini 3.5 Flash |
+| C4 | Relaciones con protocolo | 65-80 % | **100 % real** | 3 corridas reales con Gemini 3.5 Flash |
+| C4 | Legibilidad de C4 Container | Baja/Media | **Alta real** | 3 corridas reales con Gemini 3.5 Flash |
 
-La evidencia detallada y las tablas de cada corrida estan en:
+La evidencia detallada de ejecucion, logs y tablas comparativas estan consolidadas en:
 
+- [EVIDENCIA_EJECUCION.md](file:///d:/maestria/mod4/ftgo-architecture-lab/prompts_mejorados/EVIDENCIA_EJECUCION.md)
 - `prompts_mejorados/prd_mejorado.md` → seccion `## Metrica`
 - `prompts_mejorados/fsd_mejorado.md` → seccion `## Metrica`
 - `prompts_mejorados/c4_mejorado.md` → seccion `## Metrica`
