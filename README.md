@@ -30,6 +30,7 @@ El caso FTGO proviene del libro *Microservices Patterns* de Chris Richardson (Ma
 | 7 | Instrucciones para agentes | `AGENTS.md` | Guia repo-local para Codex/agentes con contexto, reglas y validaciones. |
 | 8 | Prompt mejorado PRD | `prompts_mejorados/prd_mejorado.md` | Prompt con 4 TODOs resueltos, Verification, Changelog y Metrica. |
 | 9 | Prompt mejorado FSD | `prompts_mejorados/fsd_mejorado.md` | Prompt con 4 TODOs resueltos, Verification, Changelog y Metrica. |
+| 10 | Prompt mejorado C4 | `prompts_mejorados/c4_mejorado.md` | Prompt con TODOs resueltos para diagramas C4 Mermaid legibles. |
 
 ## Estructura del proyecto
 
@@ -59,6 +60,7 @@ El caso FTGO proviene del libro *Microservices Patterns* de Chris Richardson (Ma
 │       ├── c4-model/
 │       └── diagramming-architecture/
 └── prompts_mejorados/
+    ├── c4_mejorado.md
     ├── prd_mejorado.md
     └── fsd_mejorado.md
 ```
@@ -91,6 +93,7 @@ cat docs/adr/0001-architecture-style.md
 cat docs/adr/0002-ipc-and-data-strategy.md
 cat docs/diagrams/c4_context.mmd
 cat docs/diagrams/c4_container.mmd
+cat prompts_mejorados/c4_mejorado.md
 cat prompts_mejorados/prd_mejorado.md
 cat prompts_mejorados/fsd_mejorado.md
 ```
@@ -144,6 +147,7 @@ Los prompts estan disenados para copiarse o referenciarse en un asistente de IA 
 ```text
 @prompts_mejorados/prd_mejorado.md genera un PRD ligero para FTGO usando el brief como fuente.
 @prompts_mejorados/fsd_mejorado.md genera un FSD ligero para FTGO a partir de docs/PRD.md y las US semilla.
+@prompts_mejorados/c4_mejorado.md genera y valida diagramas C4 Mermaid legibles para FTGO.
 ```
 
 **Entrada recomendada para `prd_mejorado.md`:**
@@ -158,6 +162,13 @@ Los prompts estan disenados para copiarse o referenciarse en un asistente de IA 
 - User stories semilla `US-01`, `US-02`, `US-03`.
 - Salida esperada: `docs/FSD.md`.
 
+**Entrada recomendada para `c4_mejorado.md`:**
+
+- `docs/PRD.md`, `docs/FSD.md` y ADRs.
+- Diagramas actuales en `docs/diagrams/*.mmd`.
+- Restriccion: mantener C4 Context y Container validos, legibles y con protocolos.
+- Salida esperada: diagramas Mermaid C4 en `docs/diagrams/`.
+
 ## Metricas de calidad de prompts
 
 | Prompt | Metrica | Antes (seed) | Despues (mejorado) | Evidencia |
@@ -166,11 +177,14 @@ Los prompts estan disenados para copiarse o referenciarse en un asistente de IA 
 | PRD | NFRs con metrica y origen | 40 % promedio | 100 % objetivo | Evaluacion local/manual de 3 corridas simuladas |
 | FSD | UCs completos con Given/When/Then | 3/5 promedio | 6/6 objetivo | Evaluacion local/manual de 3 corridas simuladas |
 | FSD | UCs trazables a PRD/brief/libro | 60 % promedio | 100 % objetivo | Evaluacion local/manual de 3 corridas simuladas |
+| C4 | Relaciones con protocolo | 65-80 % | 100 % objetivo | Evaluacion local/manual de 3 corridas simuladas |
+| C4 | Legibilidad de C4 Container | Baja/Media | Alta | Evaluacion local/manual de 3 corridas simuladas |
 
 La evidencia detallada y las tablas de cada corrida estan en:
 
 - `prompts_mejorados/prd_mejorado.md` → seccion `## Metrica`
 - `prompts_mejorados/fsd_mejorado.md` → seccion `## Metrica`
+- `prompts_mejorados/c4_mejorado.md` → seccion `## Metrica`
 
 ## Self-check contra rubrica
 

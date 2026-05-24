@@ -1,6 +1,10 @@
 # C4 Diagrams
 
 This directory contains the Mermaid C4 diagrams for the FTGO architecture lab.
+Use `prompts_mejorados/c4_mejorado.md` to generate or review these diagrams
+with a readability-first C4 Mermaid workflow. Semantic validation is guided by
+the local `c4-model-skill`; if `/c4m:review` is unavailable, document the
+manual review against `docs/skills/c4-model/SKILL.md`.
 
 ## Files
 
