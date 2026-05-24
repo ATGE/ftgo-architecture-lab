@@ -184,7 +184,7 @@ Los prompts estan disenados para copiarse o referenciarse en un asistente de IA 
 
 La evidencia detallada de ejecucion, logs y tablas comparativas estan consolidadas en:
 
-- [EVIDENCIA_EJECUCION.md](file:///d:/maestria/mod4/ftgo-architecture-lab/prompts_mejorados/EVIDENCIA_EJECUCION.md)
+- [EVIDENCIA_EJECUCION.md](prompts_mejorados/EVIDENCIA_EJECUCION.md)
 - `prompts_mejorados/prd_mejorado.md` → seccion `## Metrica`
 - `prompts_mejorados/fsd_mejorado.md` → seccion `## Metrica`
 - `prompts_mejorados/c4_mejorado.md` → seccion `## Metrica`

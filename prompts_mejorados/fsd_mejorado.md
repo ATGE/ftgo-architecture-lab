@@ -125,7 +125,7 @@ Antes de devolver el FSD, verifica:
 
 ## Metrica
 
-Evaluacion sobre 3 corridas reales ejecutadas con Gemini 3.5 Flash. Los resultados detallados y los logs de ejecucion estan registrados en [EVIDENCIA_EJECUCION.md](file:///d:/maestria/mod4/ftgo-architecture-lab/prompts_mejorados/EVIDENCIA_EJECUCION.md).
+Evaluacion sobre 3 corridas reales ejecutadas con Gemini 3.5 Flash. Los resultados detallados y los logs de ejecucion estan registrados en [EVIDENCIA_EJECUCION.md](./EVIDENCIA_EJECUCION.md).
 
 | Corrida | Prompt seed: UCs completos | Prompt seed: UCs con GWT | Prompt mejorado: UCs completos | Prompt mejorado: UCs con GWT |
 |---:|---:|---:|---:|---:|

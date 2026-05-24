@@ -21,8 +21,10 @@ manual review against `docs/skills/c4-model/SKILL.md`.
 The overview keeps the semantics from ADR 0001 and ADR 0002 while avoiding a
 single dense canvas. The focused diagrams replace the older combined
 order-flow and events-data views because they separate concerns and reduce
-visual noise. `Service-owned DBs` represents DB-per-service ownership without
-showing one database per service in the readable views.
+visual noise. The former full-detail container view was intentionally replaced
+by the overview plus focused views. `Service-owned DBs` represents
+DB-per-service ownership without showing one database per service in the
+readable views.
 
 ## Recommended Reading
 

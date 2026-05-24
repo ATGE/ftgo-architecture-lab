@@ -1,7 +1,7 @@
 # Installing Agent Skills
 
 This repository stores agent skills under `docs/skills/` so they are
-trackeable project artifacts for Codex-assisted work. They are not installed
+trackable project artifacts for Codex-assisted work. They are not installed
 under `.claude/skills/` because this repo is using Codex and the skills are
 kept as local guidance, not as Claude Code runtime commands.
 
@@ -63,5 +63,9 @@ Use docs/skills/diagramming-architecture/SKILL.md to improve Mermaid readability
 ```bash
 npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_context.mmd -o /tmp/c4_context.svg
 npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container.mmd -o /tmp/c4_container.svg
-npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_full.mmd -o /tmp/c4_container_full.svg
+npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_order_checkout.mmd -o /tmp/c4_container_order_checkout.svg
+npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_kitchen_ticket.mmd -o /tmp/c4_container_kitchen_ticket.svg
+npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_delivery_flow.mmd -o /tmp/c4_container_delivery_flow.svg
+npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_event_flow.mmd -o /tmp/c4_container_event_flow.svg
+npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_data_ownership.mmd -o /tmp/c4_container_data_ownership.svg
 ```

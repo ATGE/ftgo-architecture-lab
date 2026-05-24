@@ -17,9 +17,9 @@ System_Boundary(ftgo, "FTGO Platform") {
 }
 
 Rel(consumer, mobile_app, "Creates order", "Mobile/Web HTTPS")
-Rel(mobile_app, api_gateway, "Calls APIs", "JSON/HTTPS REST")
-Rel(api_gateway, restaurant_svc, "Gets menus", "JSON/HTTPS REST")
-Rel(api_gateway, order_svc, "Creates order", "JSON/HTTPS REST")
+Rel(mobile_app, api_gateway, "Submits checkout", "JSON/HTTPS REST")
+Rel(api_gateway, restaurant_svc, "Checks menu availability", "JSON/HTTPS REST")
+Rel(api_gateway, order_svc, "Requests order creation", "JSON/HTTPS REST")
 Rel(api_gateway, legacy_monolith, "Routes legacy", "JSON/HTTPS REST")
 Rel(order_svc, event_broker, "Publishes OrderCreated", "Kafka events")
 Rel(event_broker, billing_svc, "Delivers OrderCreated", "Kafka events")

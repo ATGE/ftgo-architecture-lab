@@ -15,7 +15,7 @@ System_Boundary(ftgo, "FTGO Platform") {
 }
 
 Rel(restaurant_user, restaurant_dashboard, "Updates ticket", "Browser HTTPS")
-Rel(restaurant_dashboard, api_gateway, "Calls APIs", "JSON/HTTPS REST")
+Rel(restaurant_dashboard, api_gateway, "Submits ticket decision", "JSON/HTTPS REST")
 Rel(api_gateway, restaurant_svc, "Gets availability", "JSON/HTTPS REST")
 Rel(api_gateway, kitchen_svc, "Updates ticket", "JSON/HTTPS REST")
 Rel(kitchen_svc, event_broker, "Publishes KitchenTicketAccepted/Rejected", "Kafka events")

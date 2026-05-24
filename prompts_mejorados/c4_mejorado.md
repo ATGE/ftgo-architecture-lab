@@ -102,10 +102,10 @@ System_Boundary(ftgo, "FTGO Platform") {
   ContainerDb(service_dbs, "Service-owned DBs", "PostgreSQL", "DB-per-service")
 }
 
-Rel(users, mobile_app, "Uses mobile flows", "Mobile/Web HTTPS")
-Rel(mobile_app, api_gateway, "Calls APIs", "JSON/HTTPS REST")
-Rel(api_gateway, core_services, "Calls APIs", "JSON/HTTPS REST")
-Rel(core_services, event_broker, "Publishes events", "Kafka events")
+Rel(users, mobile_app, "Places orders and tracks deliveries", "Mobile/Web HTTPS")
+Rel(mobile_app, api_gateway, "Submits order and tracking requests", "JSON/HTTPS REST")
+Rel(api_gateway, core_services, "Routes checkout, kitchen, delivery and billing requests", "JSON/HTTPS REST")
+Rel(core_services, event_broker, "Publishes order and delivery domain events", "Kafka events")
 Rel(core_services, service_dbs, "Reads/Writes own data", "JDBC/PostgreSQL")
 Rel(api_gateway, legacy_monolith, "Routes legacy", "JSON/HTTPS REST")
 ```
@@ -179,7 +179,7 @@ Evita estos errores:
 
 ## Metrica
 
-Evaluacion sobre 3 corridas reales ejecutadas con Gemini 3.5 Flash. Los resultados detallados y los logs de ejecucion estan registrados en [EVIDENCIA_EJECUCION.md](file:///d:/maestria/mod4/ftgo-architecture-lab/prompts_mejorados/EVIDENCIA_EJECUCION.md).
+Evaluacion sobre 3 corridas reales ejecutadas con Gemini 3.5 Flash. Los resultados detallados y los logs de ejecucion estan registrados en [EVIDENCIA_EJECUCION.md](./EVIDENCIA_EJECUCION.md).
 
 | Corrida | Prompt seed: relaciones con protocolo | Prompt seed: legibilidad | Prompt mejorado: relaciones con protocolo | Prompt mejorado: legibilidad |
 |---:|---:|---:|---:|---:|
