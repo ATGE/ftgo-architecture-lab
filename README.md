@@ -26,7 +26,7 @@ El caso FTGO proviene del libro *Microservices Patterns* de Chris Richardson (Ma
 | 3 | ADR 1 - Estilo arquitectonico | `docs/adr/0001-architecture-style.md` | 3 opciones evaluadas; decision: migracion incremental con Strangler Fig. |
 | 4 | ADR 2 - IPC y datos | `docs/adr/0002-ipc-and-data-strategy.md` | 3 opciones evaluadas; decision: modelo hibrido REST + eventos con DB-per-service. |
 | 5 | Diagrama C4 nivel 1 | `docs/diagrams/c4_context.mmd` | Diagrama de contexto Mermaid (`C4Context`). |
-| 6 | Diagrama C4 nivel 2 | `docs/diagrams/c4_container.mmd` | Diagrama de contenedores Mermaid (`C4Container`) en version readable/evaluator-friendly. |
+| 6 | Diagrama C4 nivel 2 | `docs/diagrams/c4_container.mmd` | Overview de contenedores Mermaid (`C4Container`) dividido con vistas enfocadas. |
 | 6b | Diagrama C4 nivel 2 full | `docs/diagrams/c4_container_full.mmd` | Version completa preservada del diagrama de contenedores. |
 | 7 | Instrucciones para agentes | `AGENTS.md` | Guia repo-local para Codex/agentes con contexto, reglas y validaciones. |
 | 8 | Prompt mejorado PRD | `prompts_mejorados/prd_mejorado.md` | Prompt con 4 TODOs resueltos, Verification, Changelog y Metrica. |
@@ -51,7 +51,10 @@ El caso FTGO proviene del libro *Microservices Patterns* de Chris Richardson (Ma
 │   │   ├── README.md
 │   │   ├── c4_context.mmd
 │   │   ├── c4_container.mmd
-│   │   └── c4_container_full.mmd
+│   │   ├── c4_container_delivery_flow.mmd
+│   │   ├── c4_container_events_data.mmd
+│   │   ├── c4_container_full.mmd
+│   │   └── c4_container_order_flow.mmd
 │   └── skills/
 │       ├── c4-model/
 │       └── diagramming-architecture/
@@ -108,6 +111,9 @@ find . -maxdepth 3 -type f -not -path './.git/*' | sort
 ```bash
 npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_context.mmd -o docs/diagrams/c4_context.svg
 npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container.mmd -o docs/diagrams/c4_container.svg
+npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_order_flow.mmd -o docs/diagrams/c4_container_order_flow.svg
+npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_delivery_flow.mmd -o docs/diagrams/c4_container_delivery_flow.svg
+npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_events_data.mmd -o docs/diagrams/c4_container_events_data.svg
 npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_full.mmd -o docs/diagrams/c4_container_full.svg
 ```
 
@@ -127,8 +133,9 @@ desde Codex:
 - Guia de instalacion: `docs/agent-skills/INSTALL_SKILLS.md`
 - Fuentes, commits y revision de seguridad: `docs/agent-skills/SKILLS_SOURCES.md`
 
-El diagrama `docs/diagrams/c4_container.mmd` es la version readable para la
-rubrica; `docs/diagrams/c4_container_full.mmd` preserva la version completa.
+El diagrama `docs/diagrams/c4_container.mmd` es el overview readable para la
+rubrica; las vistas enfocadas dividen order/payment, delivery y eventos/datos.
+`docs/diagrams/c4_container_full.mmd` preserva la version completa.
 
 ## Como invocar los prompts mejorados
 

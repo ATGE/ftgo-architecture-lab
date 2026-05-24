@@ -1,0 +1,28 @@
+C4Container
+title FTGO - Delivery, tracking and notifications flow (nivel 2)
+
+Person(consumer, "Consumidor", "Consulta tracking")
+Person(courier, "Courier", "Acepta entregas y reporta ubicacion")
+
+System_Ext(google_maps, "Google Maps", "Mapas y rutas")
+System_Ext(sendgrid_twilio, "SendGrid/Twilio", "Email/SMS")
+
+System_Boundary(ftgo, "FTGO Platform") {
+  Container(mobile_app, "Mobile App", "React Native / Web", "Tracking y entregas")
+  Container(api_gateway, "API Gateway", "Spring Cloud Gateway", "Entrada HTTP y auth")
+  Container(delivery_svc, "Delivery Service", "Java 17 / Spring Boot", "Asignacion, rutas y tracking")
+  Container(notification_svc, "Notification Service", "Java 17 / Spring Boot", "Email, SMS, push y recibos")
+  ContainerQueue(event_broker, "Event Broker", "Apache Kafka", "Eventos de delivery")
+  ContainerDb(service_dbs, "Service-owned DBs", "PostgreSQL", "DB-per-service")
+}
+
+Rel(consumer, mobile_app, "Gets tracking", "Mobile HTTPS/WebSocket")
+Rel(courier, mobile_app, "Updates deliveries", "Mobile HTTPS/WebSocket")
+Rel(mobile_app, api_gateway, "Calls APIs", "JSON/HTTPS REST")
+Rel(api_gateway, delivery_svc, "Gets tracking", "JSON/HTTPS REST")
+Rel(delivery_svc, google_maps, "Gets routes", "HTTPS API")
+Rel(delivery_svc, event_broker, "Publishes events", "Kafka events")
+Rel(notification_svc, event_broker, "Consumes events", "Kafka events")
+Rel(notification_svc, sendgrid_twilio, "Sends notifications", "HTTPS API")
+Rel(delivery_svc, service_dbs, "Reads/Writes own data", "JDBC/PostgreSQL")
+Rel(notification_svc, service_dbs, "Reads/Writes own data", "JDBC/PostgreSQL")
