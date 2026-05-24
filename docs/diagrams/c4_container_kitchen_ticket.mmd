@@ -1,0 +1,26 @@
+C4Container
+title FTGO - Kitchen ticket handling (nivel 2)
+
+Person(restaurant_user, "Restaurante", "Acepta o rechaza tickets")
+
+System_Boundary(ftgo, "FTGO Platform") {
+  Container(restaurant_dashboard, "Restaurant Dashboard", "Web App", "Tickets de cocina")
+  Container(api_gateway, "API Gateway", "Spring Cloud Gateway", "Entrada HTTP y auth")
+  Container(restaurant_svc, "Restaurant Service", "Java 17 / Spring Boot", "Restaurante y disponibilidad")
+  Container(order_svc, "Order Service", "Java 17 / Spring Boot", "Estado del pedido")
+  Container(kitchen_svc, "Kitchen Service", "Java 17 / Spring Boot", "Preparacion y tickets")
+  Container(notification_svc, "Notification Service", "Java 17 / Spring Boot", "Cambios de estado")
+  ContainerQueue(event_broker, "Event Broker", "Apache Kafka", "Eventos de cocina")
+  ContainerDb(service_dbs, "Service-owned DBs", "PostgreSQL", "DB-per-service")
+}
+
+Rel(restaurant_user, restaurant_dashboard, "Updates ticket", "Browser HTTPS")
+Rel(restaurant_dashboard, api_gateway, "Submits ticket decision", "JSON/HTTPS REST")
+Rel(api_gateway, restaurant_svc, "Gets availability", "JSON/HTTPS REST")
+Rel(api_gateway, kitchen_svc, "Updates ticket", "JSON/HTTPS REST")
+Rel(kitchen_svc, event_broker, "Publishes KitchenTicketAccepted/Rejected", "Kafka events")
+Rel(event_broker, order_svc, "Delivers KitchenTicketAccepted/Rejected", "Kafka events")
+Rel(event_broker, notification_svc, "Delivers state changes to notify", "Kafka events")
+Rel(restaurant_svc, service_dbs, "Reads/Writes own data", "JDBC/PostgreSQL")
+Rel(kitchen_svc, service_dbs, "Reads/Writes own data", "JDBC/PostgreSQL")
+Rel(order_svc, service_dbs, "Reads/Writes own data", "JDBC/PostgreSQL")

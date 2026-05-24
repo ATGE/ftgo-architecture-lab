@@ -1,0 +1,30 @@
+C4Container
+title FTGO - Order checkout (nivel 2)
+
+Person(consumer, "Consumidor", "Crea pedido y paga")
+
+System_Ext(stripe, "Stripe", "Pasarela de pago")
+System_Ext(legacy_monolith, "Legacy Monolith", "Aplicacion Java/WAR existente")
+
+System_Boundary(ftgo, "FTGO Platform") {
+  Container(mobile_app, "Mobile App", "React Native / Web", "Checkout de pedido")
+  Container(api_gateway, "API Gateway", "Spring Cloud Gateway", "Routing Strangler Fig y auth")
+  Container(restaurant_svc, "Restaurant Service", "Java 17 / Spring Boot", "Menus y disponibilidad")
+  Container(order_svc, "Order Service", "Java 17 / Spring Boot", "Toma de pedidos")
+  Container(billing_svc, "Billing Service", "Java 17 / Spring Boot", "Cobros y pagos")
+  ContainerQueue(event_broker, "Event Broker", "Apache Kafka", "Eventos de pedido")
+  ContainerDb(service_dbs, "Service-owned DBs", "PostgreSQL", "DB-per-service")
+}
+
+Rel(consumer, mobile_app, "Creates order", "Mobile/Web HTTPS")
+Rel(mobile_app, api_gateway, "Submits checkout", "JSON/HTTPS REST")
+Rel(api_gateway, restaurant_svc, "Checks menu availability", "JSON/HTTPS REST")
+Rel(api_gateway, order_svc, "Requests order creation", "JSON/HTTPS REST")
+Rel(api_gateway, legacy_monolith, "Routes legacy", "JSON/HTTPS REST")
+Rel(order_svc, event_broker, "Publishes OrderCreated", "Kafka events")
+Rel(event_broker, billing_svc, "Delivers OrderCreated", "Kafka events")
+Rel(billing_svc, stripe, "Authorizes payment", "HTTPS API")
+Rel(billing_svc, event_broker, "Publishes PaymentAuthorized", "Kafka events")
+Rel(event_broker, order_svc, "Delivers PaymentAuthorized", "Kafka events")
+Rel(order_svc, service_dbs, "Reads/Writes own data", "JDBC/PostgreSQL")
+Rel(billing_svc, service_dbs, "Reads/Writes own data", "JDBC/PostgreSQL")

@@ -1,0 +1,21 @@
+C4Container
+title FTGO - Asynchronous event flow (nivel 2)
+
+System_Boundary(ftgo, "FTGO Platform") {
+  Container(order_svc, "Order Service", "Java 17 / Spring Boot", "Pedido y aggregate principal")
+  Container(kitchen_svc, "Kitchen Service", "Java 17 / Spring Boot", "Tickets de cocina")
+  Container(delivery_svc, "Delivery Service", "Java 17 / Spring Boot", "Asignacion y tracking")
+  Container(billing_svc, "Billing Service", "Java 17 / Spring Boot", "Cobros y payouts")
+  Container(notification_svc, "Notification Service", "Java 17 / Spring Boot", "Notificaciones")
+  ContainerQueue(event_broker, "Event Broker", "Apache Kafka", "Eventos asincronos")
+}
+
+Rel(order_svc, event_broker, "Publishes OrderCreated", "Kafka events")
+Rel(event_broker, kitchen_svc, "Delivers OrderCreated", "Kafka events")
+Rel(event_broker, billing_svc, "Delivers OrderCreated", "Kafka events")
+Rel(billing_svc, event_broker, "Publishes PaymentAuthorized", "Kafka events")
+Rel(kitchen_svc, event_broker, "Publishes KitchenTicketAccepted/Rejected", "Kafka events")
+Rel(event_broker, delivery_svc, "Delivers KitchenTicketAccepted/Rejected", "Kafka events")
+Rel(delivery_svc, event_broker, "Publishes CourierAssigned/TimedOut", "Kafka events")
+Rel(order_svc, event_broker, "Publishes OrderStatusChanged", "Kafka events")
+Rel(event_broker, notification_svc, "Delivers OrderStatusChanged", "Kafka events")

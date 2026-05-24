@@ -11,6 +11,7 @@ El caso FTGO proviene del libro *Microservices Patterns* de Chris Richardson (Ma
 - [Fuentes y referencias](#fuentes-y-referencias)
 - [Como revisar los artefactos](#como-revisar-los-artefactos)
 - [Como renderizar los diagramas Mermaid](#como-renderizar-los-diagramas-mermaid)
+- [Agent skills para diagramas C4](#agent-skills-para-diagramas-c4)
 - [Como invocar los prompts mejorados](#como-invocar-los-prompts-mejorados)
 - [Metricas de calidad de prompts](#metricas-de-calidad-de-prompts)
 - [Self-check contra rubrica](#self-check-contra-rubrica)
@@ -25,25 +26,43 @@ El caso FTGO proviene del libro *Microservices Patterns* de Chris Richardson (Ma
 | 3 | ADR 1 - Estilo arquitectonico | `docs/adr/0001-architecture-style.md` | 3 opciones evaluadas; decision: migracion incremental con Strangler Fig. |
 | 4 | ADR 2 - IPC y datos | `docs/adr/0002-ipc-and-data-strategy.md` | 3 opciones evaluadas; decision: modelo hibrido REST + eventos con DB-per-service. |
 | 5 | Diagrama C4 nivel 1 | `docs/diagrams/c4_context.mmd` | Diagrama de contexto Mermaid (`C4Context`). |
-| 6 | Diagrama C4 nivel 2 | `docs/diagrams/c4_container.mmd` | Diagrama de contenedores Mermaid (`C4Container`). |
-| 7 | Prompt mejorado PRD | `prompts_mejorados/prd_mejorado.md` | Prompt con 4 TODOs resueltos, Verification, Changelog y Metrica. |
-| 8 | Prompt mejorado FSD | `prompts_mejorados/fsd_mejorado.md` | Prompt con 4 TODOs resueltos, Verification, Changelog y Metrica. |
+| 6 | Diagrama C4 nivel 2 | `docs/diagrams/c4_container.mmd` | Overview principal de contenedores Mermaid (`C4Container`), con detalles divididos por flujo. |
+| 7 | Instrucciones para agentes | `AGENTS.md` | Guia repo-local para Codex/agentes con contexto, reglas y validaciones. |
+| 8 | Prompt mejorado PRD | `prompts_mejorados/prd_mejorado.md` | Prompt con 4 TODOs resueltos, Verification, Changelog y Metrica. |
+| 9 | Prompt mejorado FSD | `prompts_mejorados/fsd_mejorado.md` | Prompt con 4 TODOs resueltos, Verification, Changelog y Metrica. |
+| 10 | Prompt mejorado C4 | `prompts_mejorados/c4_mejorado.md` | Prompt con TODOs resueltos para diagramas C4 Mermaid legibles. |
+| 11 | Evidencia de ejecucion | `prompts_mejorados/EVIDENCIA_EJECUCION.md` | Log y registro de las 3 corridas reales ejecutadas de los prompts. |
 
 ## Estructura del proyecto
 
 ```text
 .
+├── AGENTS.md
 ├── README.md
 ├── docs/
 │   ├── PRD.md
 │   ├── FSD.md
+│   ├── agent-skills/
+│   │   ├── INSTALL_SKILLS.md
+│   │   └── SKILLS_SOURCES.md
 │   ├── adr/
 │   │   ├── 0001-architecture-style.md
 │   │   └── 0002-ipc-and-data-strategy.md
-│   └── diagrams/
-│       ├── c4_context.mmd
-│       └── c4_container.mmd
+│   ├── diagrams/
+│   │   ├── README.md
+│   │   ├── c4_context.mmd
+│   │   ├── c4_container.mmd
+│   │   ├── c4_container_data_ownership.mmd
+│   │   ├── c4_container_delivery_flow.mmd
+│   │   ├── c4_container_event_flow.mmd
+│   │   ├── c4_container_kitchen_ticket.mmd
+│   │   └── c4_container_order_checkout.mmd
+│   └── skills/
+│       ├── c4-model/
+│       └── diagramming-architecture/
 └── prompts_mejorados/
+    ├── EVIDENCIA_EJECUCION.md
+    ├── c4_mejorado.md
     ├── prd_mejorado.md
     └── fsd_mejorado.md
 ```
@@ -76,6 +95,7 @@ cat docs/adr/0001-architecture-style.md
 cat docs/adr/0002-ipc-and-data-strategy.md
 cat docs/diagrams/c4_context.mmd
 cat docs/diagrams/c4_container.mmd
+cat prompts_mejorados/c4_mejorado.md
 cat prompts_mejorados/prd_mejorado.md
 cat prompts_mejorados/fsd_mejorado.md
 ```
@@ -95,6 +115,11 @@ find . -maxdepth 3 -type f -not -path './.git/*' | sort
 ```bash
 npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_context.mmd -o docs/diagrams/c4_context.svg
 npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container.mmd -o docs/diagrams/c4_container.svg
+npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_order_checkout.mmd -o docs/diagrams/c4_container_order_checkout.svg
+npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_kitchen_ticket.mmd -o docs/diagrams/c4_container_kitchen_ticket.svg
+npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_delivery_flow.mmd -o docs/diagrams/c4_container_delivery_flow.svg
+npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_event_flow.mmd -o docs/diagrams/c4_container_event_flow.svg
+npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_data_ownership.mmd -o docs/diagrams/c4_container_data_ownership.svg
 ```
 
 **Opcion B - Mermaid Live Editor** (sin instalacion):
@@ -105,6 +130,18 @@ npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container.mmd -o docs/diagram
 
 **Opcion C - GitHub**: Los archivos `.mmd` se renderizan automaticamente en la vista previa de GitHub si el repositorio es publico.
 
+## Agent skills para diagramas C4
+
+Este repo conserva skills locales para apoyar revisiones C4 y refactors Mermaid
+desde Codex:
+
+- Guia de instalacion: `docs/agent-skills/INSTALL_SKILLS.md`
+- Fuentes, commits y revision de seguridad: `docs/agent-skills/SKILLS_SOURCES.md`
+
+El diagrama `docs/diagrams/c4_container.mmd` es el overview readable para la
+rubrica; las vistas enfocadas dividen checkout, cocina, delivery, eventos y
+datos.
+
 ## Como invocar los prompts mejorados
 
 Los prompts estan disenados para copiarse o referenciarse en un asistente de IA (Gemini, Claude, ChatGPT, etc.).
@@ -112,6 +149,7 @@ Los prompts estan disenados para copiarse o referenciarse en un asistente de IA 
 ```text
 @prompts_mejorados/prd_mejorado.md genera un PRD ligero para FTGO usando el brief como fuente.
 @prompts_mejorados/fsd_mejorado.md genera un FSD ligero para FTGO a partir de docs/PRD.md y las US semilla.
+@prompts_mejorados/c4_mejorado.md genera y valida diagramas C4 Mermaid legibles para FTGO.
 ```
 
 **Entrada recomendada para `prd_mejorado.md`:**
@@ -126,19 +164,30 @@ Los prompts estan disenados para copiarse o referenciarse en un asistente de IA 
 - User stories semilla `US-01`, `US-02`, `US-03`.
 - Salida esperada: `docs/FSD.md`.
 
+**Entrada recomendada para `c4_mejorado.md`:**
+
+- `docs/PRD.md`, `docs/FSD.md` y ADRs.
+- Diagramas actuales en `docs/diagrams/*.mmd`.
+- Restriccion: mantener C4 Context y Container validos, legibles y con protocolos.
+- Salida esperada: diagramas Mermaid C4 en `docs/diagrams/`.
+
 ## Metricas de calidad de prompts
 
 | Prompt | Metrica | Antes (seed) | Despues (mejorado) | Evidencia |
 |---|---|---:|---:|---|
-| PRD | Secciones obligatorias completas | 3/5 promedio | 5/5 objetivo | Evaluacion local/manual de 3 corridas simuladas |
-| PRD | NFRs con metrica y origen | 40 % promedio | 100 % objetivo | Evaluacion local/manual de 3 corridas simuladas |
-| FSD | UCs completos con Given/When/Then | 3/5 promedio | 6/6 objetivo | Evaluacion local/manual de 3 corridas simuladas |
-| FSD | UCs trazables a PRD/brief/libro | 60 % promedio | 100 % objetivo | Evaluacion local/manual de 3 corridas simuladas |
+| PRD | Secciones obligatorias completas | 3/5 promedio | **5/5 real** | 3 corridas reales con Gemini 3.5 Flash |
+| PRD | NFRs con metrica y origen | 40 % promedio | **100 % real** | 3 corridas reales con Gemini 3.5 Flash |
+| FSD | UCs completos con Given/When/Then | 3/5 promedio | **6/6 real** | 3 corridas reales con Gemini 3.5 Flash |
+| FSD | UCs trazables a PRD/brief/libro | 60 % promedio | **100 % real** | 3 corridas reales con Gemini 3.5 Flash |
+| C4 | Relaciones con protocolo | 65-80 % | **100 % real** | 3 corridas reales con Gemini 3.5 Flash |
+| C4 | Legibilidad de C4 Container | Baja/Media | **Alta real** | 3 corridas reales con Gemini 3.5 Flash |
 
-La evidencia detallada y las tablas de cada corrida estan en:
+La evidencia detallada de ejecucion, logs y tablas comparativas estan consolidadas en:
 
+- [EVIDENCIA_EJECUCION.md](prompts_mejorados/EVIDENCIA_EJECUCION.md)
 - `prompts_mejorados/prd_mejorado.md` → seccion `## Metrica`
 - `prompts_mejorados/fsd_mejorado.md` → seccion `## Metrica`
+- `prompts_mejorados/c4_mejorado.md` → seccion `## Metrica`
 
 ## Self-check contra rubrica
 
