@@ -1,0 +1,20 @@
+C4Container
+title FTGO - Data ownership (nivel 2)
+
+System_Ext(legacy_monolith, "Legacy Monolith", "Datos legacy durante Strangler Fig")
+
+System_Boundary(ftgo, "FTGO Platform") {
+  Container(order_svc, "Order Service", "Java 17 / Spring Boot", "Pedido y aggregate principal")
+  Container(kitchen_svc, "Kitchen Service", "Java 17 / Spring Boot", "Tickets de cocina")
+  Container(delivery_svc, "Delivery Service", "Java 17 / Spring Boot", "Asignacion y tracking")
+  Container(billing_svc, "Billing Service", "Java 17 / Spring Boot", "Cobros y payouts")
+  Container(notification_svc, "Notification Service", "Java 17 / Spring Boot", "Notificaciones")
+  ContainerDb(service_dbs, "Service-owned DBs", "PostgreSQL", "DB-per-service para servicios extraidos")
+}
+
+Rel(order_svc, service_dbs, "Reads/Writes own data", "JDBC/PostgreSQL")
+Rel(kitchen_svc, service_dbs, "Reads/Writes own data", "JDBC/PostgreSQL")
+Rel(delivery_svc, service_dbs, "Reads/Writes own data", "JDBC/PostgreSQL")
+Rel(billing_svc, service_dbs, "Reads/Writes own data", "JDBC/PostgreSQL")
+Rel(notification_svc, service_dbs, "Reads/Writes own data", "JDBC/PostgreSQL")
+Rel(legacy_monolith, service_dbs, "Coexists during migration", "JDBC/PostgreSQL adapters")

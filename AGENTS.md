@@ -47,7 +47,6 @@ FSD, ADRs, or current diagrams.
 
 - `docs/diagrams/c4_context.mmd` is the C4 level 1 context diagram.
 - `docs/diagrams/c4_container.mmd` is the readable/evaluator-friendly C4 level 2 diagram.
-- `docs/diagrams/c4_container_full.mmd` preserves the full-detail container diagram.
 - Keep `C4Context` and `C4Container` directives valid.
 - Keep `System_Boundary(ftgo, "FTGO Platform")` in the container diagram.
 - Every `Rel(...)` in the container diagram must include a technology/protocol argument.
@@ -83,7 +82,6 @@ Mermaid render checks, when Node.js and Mermaid CLI can run:
 ```bash
 timeout 120s npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_context.mmd -o /tmp/c4_context.svg
 timeout 120s npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container.mmd -o /tmp/c4_container.svg
-timeout 120s npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_full.mmd -o /tmp/c4_container_full.svg
 ```
 
 If Mermaid CLI times out or fails because of the environment, report the exact

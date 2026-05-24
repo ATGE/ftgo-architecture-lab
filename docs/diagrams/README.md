@@ -8,17 +8,27 @@ This directory contains the Mermaid C4 diagrams for the FTGO architecture lab.
 |---|---|
 | `c4_context.mmd` | C4 level 1 context diagram for FTGO, actors, and external systems. |
 | `c4_container.mmd` | C4 level 2 overview required by the rubric, optimized for readability. |
-| `c4_container_order_flow.mmd` | Focused C4 Container view for order taking, kitchen tickets, and payment. |
+| `c4_container_order_checkout.mmd` | Focused C4 Container view for order creation and payment authorization. |
+| `c4_container_kitchen_ticket.mmd` | Focused C4 Container view for restaurant ticket acceptance/rejection. |
 | `c4_container_delivery_flow.mmd` | Focused C4 Container view for delivery assignment, tracking, maps, and notifications. |
-| `c4_container_events_data.mmd` | Focused C4 Container view for ADR 0002 IPC and data strategy. |
-| `c4_container_full.mmd` | Full-detail container diagram preserved from the previous version. |
+| `c4_container_event_flow.mmd` | Focused C4 Container view for asynchronous IPC from ADR 0002. |
+| `c4_container_data_ownership.mmd` | Focused C4 Container view for DB-per-service ownership from ADR 0002. |
 
 The overview keeps the semantics from ADR 0001 and ADR 0002 while avoiding a
-single dense canvas. The focused diagrams split order/payment, delivery, and
-events/data concerns so the architecture remains readable. `Service-owned DBs`
-represents DB-per-service ownership without showing one database per service in
-the readable views. `c4_container_full.mmd` keeps the full-detail version for
-traceability.
+single dense canvas. The focused diagrams replace the older combined
+order-flow and events-data views because they separate concerns and reduce
+visual noise. `Service-owned DBs` represents DB-per-service ownership without
+showing one database per service in the readable views.
+
+## Recommended Reading
+
+1. `c4_context.mmd`
+2. `c4_container.mmd`
+3. `c4_container_order_checkout.mmd`
+4. `c4_container_kitchen_ticket.mmd`
+5. `c4_container_delivery_flow.mmd`
+6. `c4_container_event_flow.mmd`
+7. `c4_container_data_ownership.mmd`
 
 ## Render
 
@@ -27,10 +37,11 @@ Requires Node.js and Mermaid CLI through `npx`.
 ```bash
 npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_context.mmd -o /tmp/c4_context.svg
 npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container.mmd -o /tmp/c4_container.svg
-npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_order_flow.mmd -o /tmp/c4_container_order_flow.svg
+npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_order_checkout.mmd -o /tmp/c4_container_order_checkout.svg
+npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_kitchen_ticket.mmd -o /tmp/c4_container_kitchen_ticket.svg
 npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_delivery_flow.mmd -o /tmp/c4_container_delivery_flow.svg
-npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_events_data.mmd -o /tmp/c4_container_events_data.svg
-npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_full.mmd -o /tmp/c4_container_full.svg
+npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_event_flow.mmd -o /tmp/c4_container_event_flow.svg
+npx -y @mermaid-js/mermaid-cli -i docs/diagrams/c4_container_data_ownership.mmd -o /tmp/c4_container_data_ownership.svg
 ```
 
 For repository artifacts, prefer reviewing the `.mmd` sources and generating
